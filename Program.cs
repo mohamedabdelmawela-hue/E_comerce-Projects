@@ -5,7 +5,8 @@ using System.Text;
 using myStore.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-var builder = WebApplication.CreateBuilder(args);
+using myStore.Middleware;
+    var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -294,7 +295,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
