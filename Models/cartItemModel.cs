@@ -13,7 +13,7 @@ namespace myStore.Models
         [ForeignKey("productModel")]
         public int productId {  get; set; }
         public productModel productModel { get; set; } = null!;
-
+        public double perice { get; set; }
         public int quantity {  get; set; }
     }
 }
