@@ -1,4 +1,5 @@
 ﻿using myStore.DTO;
+using myStore.Middleware;
 using myStore.Models;
 using myStore.Repository;
 
@@ -50,7 +51,7 @@ namespace myStore.ServiceLayer
             var getId = _categoryRepository.GetCategoryID(id);
             if (getId == null)
             {
-                throw new Exception("Not Found");
+                throw new  NotFoundException("Not Found");
             }
              getId.categoryName= categoryDTO.CategoryName;
             _categoryRepository.UpdateCategory(getId);
@@ -61,7 +62,7 @@ namespace myStore.ServiceLayer
             var getId = _categoryRepository.GetCategoryID(id);
             if (getId == null)
             {
-                throw new Exception("Not Found");
+                throw new NotFoundException("Not Found");
             }
             _categoryRepository.DeleteCategory(getId);
         }

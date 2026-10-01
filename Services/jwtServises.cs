@@ -88,7 +88,7 @@ namespace myStore.Services
             new Claim(ClaimTypes.Email,user.userEmail),
             new Claim(ClaimTypes.Name,user.userName),
             };
-
+   
             var kkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["jwt:key"]!));
             var crads=new SigningCredentials(kkey,SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(

@@ -17,6 +17,21 @@ namespace myStore.Middleware
             {
                 await _next(context);
             }
+            catch (NotFoundException ex)
+            {
+                context.Response.ContentType = "application/json";
+
+                context.Response.StatusCode =
+                    StatusCodes.Status404NotFound;
+
+                var response = new
+                {
+                    Message = ex.Message
+                };
+
+                await context.Response.WriteAsync(
+                    JsonSerializer.Serialize(response));
+            }
             catch (Exception ex)
             {
                 context.Response.ContentType = "application/json";

@@ -6,11 +6,32 @@ using myStore.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using myStore.Middleware;
-    var builder = WebApplication.CreateBuilder(args);
+using myStore.ServiceLayer;
+using myStore.Repository;
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IUserServiceLayer, UserServiceLayer>();
+builder.Services.AddScoped<IproductServices,ProductServices>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IproductRepository,productRepository>();
+builder.Services.AddScoped<ICategoryServices, CategoryServiceLayer>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddScoped<ICartService, CartServiceLayer>();
+builder.Services.AddScoped<ICartRepository, cartRepository>();
+
+builder.Services.AddScoped<ICartItemService, cartItemServices>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+
+builder.Services.AddScoped<IOrderService, OrderServiceLayer>();
+builder.Services.AddScoped<IOrderRepository, orderRepository>();
+
+builder.Services.AddScoped<IOrderItemRepository, orderItemRepository>();
+
+builder.Services.AddScoped<ICheckoutService, ChickOutService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<E_comerceContext>(options =>

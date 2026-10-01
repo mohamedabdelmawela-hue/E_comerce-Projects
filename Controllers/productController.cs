@@ -34,7 +34,12 @@ namespace myStore.Controllers
             }
             return Ok(result2);
         }
-        [HttpPut]
+        [HttpPost]
+        public IActionResult ADD(ProductDTO model) { 
+        _iproductServices.Add(model);
+            return Ok("ADD Sucessufully");
+        }
+        [HttpPut("{id}")]
         public IActionResult Update(ProductDTO productDTO,int id) {
             var result2 = _iproductServices.GetProductById(id);
             if (result2 == null)
@@ -42,10 +47,10 @@ namespace myStore.Controllers
                 return NotFound("Not Found");
             }
             _iproductServices.Update(productDTO, id);
-            return Ok( );
+            return Ok( "product uodated");
 
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteById(ProductDTO productDTO,int id) {
             var result2 = _iproductServices.GetProductById(id);
             if (result2 == null)

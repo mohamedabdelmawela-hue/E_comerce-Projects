@@ -1,86 +1,73 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using myStore.DataBase;
 using myStore.DTO;
-using myStore.Models;
+using myStore.ServiceLayer;
+
 namespace myStore.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class categoryController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly E_comerceContext _context;
-        public categoryController(E_comerceContext e_ComerceContext) {
+        private readonly ICategoryServices _categoryServices;
 
-            _context = e_ComerceContext;
-        }
-        [HttpPost("AddCategory")]
-        public IActionResult AddCategory(CategoryDTO categoryDTO)
+        public CategoryController(ICategoryServices categoryServices)
         {
-            var res = _context.Category.FirstOrDefault(x => x.categoryName == categoryDTO.CategoryName);
-            if (res != null) {
-                return BadRequest("res");
-            }
-            //object from class not from db
-            categoryModel ress = new categoryModel
-            {
-                categoryName = categoryDTO.CategoryName
-
-            };
-            _context.Category.Add(ress);
-            _context.SaveChanges();
-
-            return Ok("Right");
+            _categoryServices = categoryServices;
         }
-        [HttpGet("{id}")]
-        public IActionResult getCategoryID(int id)
-        {
-            var result = _context.Category.Find( id);
-            if (result == null) {
-                return NotFound();
-            } 
-             return Ok(result);
-        }
+
+        // GET: api/Category
         [HttpGet]
-        public IActionResult GetAllCategory()
+        public IActionResult GetAll()
         {
-            var resultall = _context.Category.ToList();
-            if (resultall == null)
+            var categories = _categoryServices.GetAllCategories();
+            return Ok(categories);
+        }
+
+        // GET: api/Category/5
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var category = _categoryServices.GetCategoryID(id);
+
+            if (category == null)
             {
-                return NotFound();
-
+                return NotFound("Category Not Found");
             }
-            return Ok(resultall);
 
-
+            return Ok(category);
         }
+
+        // POST: api/Category
+        [HttpPost]
+        public IActionResult Add(CategoryDTO categoryDTO)
+        {
+            _categoryServices.Add(categoryDTO);
+
+            return Ok("Category Added Successfully");
+        }
+
+        // PUT: api/Category/5
         [HttpPut("{id}")]
-        public IActionResult EditCategory(int id,CategoryDTO dTO) { 
-        var result = _context.Category.FirstOrDefault(x=>x.categoryId == id);
-            if (result == null) 
-            { return NotFound(); }
+        public IActionResult Update(int id, CategoryDTO categoryDTO)
+        {
+             
+                _categoryServices.Update(categoryDTO, id);
 
-            result.categoryName = dTO.CategoryName;
-            
-            _context.SaveChanges();
-            return Ok(result);
-
+                return Ok("Category Updated Successfully");
+             
         }
+
+        // DELETE: api/Category/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id) 
-        { 
-        var result= _context.Category.Find(id);
-            if (result == null) { return NotFound(); }
-            _context.Category.Remove(result);
-            _context.SaveChanges();
-            return Ok(result);
-        
+        public IActionResult Delete( CategoryDTO categoryDTO,int id)
+        {
+             
+                _categoryServices.Delete( categoryDTO,id);
+
+                return Ok("Category Deleted Successfully");
+             
         }
-
-
-
-
     }
 }

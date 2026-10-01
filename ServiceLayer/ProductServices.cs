@@ -51,7 +51,10 @@ namespace myStore.ServiceLayer
             productModel.productDescription = productDTO.productDescription;
             productModel.productprice= productDTO.productprice;
             productModel.productQuantity = productDTO.productQuantity;
+            productModel.categoryId = productDTO.categoryId;
+
             _repository.Add(productModel);
+            
             
         }
         public void Update(ProductDTO productDTO, int id) {
@@ -64,6 +67,7 @@ namespace myStore.ServiceLayer
             findProductId.productDescription= productDTO.productDescription;
             findProductId.productprice= productDTO.productprice;
             findProductId.productQuantity= productDTO.productQuantity;
+            findProductId.categoryId = productDTO.categoryId;
             _repository.Update(findProductId);
         }
         public void Delete(ProductDTO productDTO,int id) {

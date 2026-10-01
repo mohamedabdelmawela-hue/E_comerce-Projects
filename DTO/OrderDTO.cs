@@ -1,4 +1,7 @@
-﻿namespace myStore.DTO
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace myStore.DTO
 {
     public class OrderDTO
     {
