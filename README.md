@@ -408,33 +408,7 @@ OrderItem
 ```
 
 ---
-
-## 🔗 Entity Relationships
-
-Simplified relationship structure:
-
-```text
-User
- │
- └── Cart
-      │
-      └── CartItems
-             │
-             └── Product
-                    │
-                    └── Category
-
-
-User
- │
- └── Orders
-       │
-       └── OrderItems
-              │
-              └── Product
-```
-
----
+ 
 
 ## 📁 Project Structure
 
